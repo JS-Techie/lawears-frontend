@@ -1,37 +1,57 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import React from 'react'
+import { useEffect } from 'react'
+import { Stack, SplashScreen } from 'expo-router'
+import { useFonts } from 'expo-font'
+import { NativeWindStyleSheet } from "nativewind";
+import { PaperProvider} from 'react-native-paper';
+import customPaperTheme from '@/constants/customPaperTheme';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+
+const _layout = () => {
+  const [fontsLoaded, error ] = useFonts({
+    "Caros-Black-Italic": require('../assets/fonts/cretypeCarosBlackItalic.otf'),
+    "Caros-Black": require('../assets/fonts/cretypeCarosBlack.otf'),
+    "Caros-Bold-Italic": require('../assets/fonts/cretypeCarosBoldItalic.otf'),
+    "Caros-Bold": require('../assets/fonts/cretypeCarosBold.otf'),
+    "Caros-ExtraBold-Italic": require('../assets/fonts/cretypeCarosExtraBoldItalic.otf'),
+    "Caros-ExtraBold": require('../assets/fonts/cretypeCarosExtraBold.otf'),
+    "Caros-ExtraLight-Italic": require('../assets/fonts/cretypeCarosExtraLightItalic.otf'),
+    "Caros-ExtraLight": require('../assets/fonts/cretypeCarosExtraLight.otf'),
+    "Caros-Heavy-Italic": require('../assets/fonts/cretypeCarosHeavyItalic.otf'),
+    "Caros-Heavy": require('../assets/fonts/cretypeCarosHeavy.otf'),
+    "Caros-Italic": require('../assets/fonts/cretypeCarosItalic.otf'),
+    "Caros-Light-Italic": require('../assets/fonts/cretypeCarosLightItalic.otf'),
+    "Caros-Light": require('../assets/fonts/cretypeCarosLight.otf'),
+    "Caros-Medium-Italic": require('../assets/fonts/cretypeCarosMediumItalic.otf'),
+    "Caros-Medium": require('../assets/fonts/cretypeCarosMedium.otf'),
+    "Caros-Thin-Italic": require('../assets/fonts/cretypeCarosThinItalic.otf'),
+    "Caros-Thin": require('../assets/fonts/cretypeCarosThin.otf'),
+    "Caros": require('../assets/fonts/cretypeCaros.otf'),
+    "raleway": require('../assets/fonts/Raleway-BoldItalic.ttf')
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    if (error) throw error
+    if (fontsLoaded) SplashScreen.hideAsync();
+  },[fontsLoaded, error])
 
-  if (!loaded) {
-    return null;
-  }
+  if (!fontsLoaded &&  !error) return null;
+
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <PaperProvider theme={customPaperTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+          <Stack.Screen name='index' options={{headerShown: false}}/>
+          <Stack.Screen name='signup' options={{headerShown: false}}/>
       </Stack>
-    </ThemeProvider>
-  );
+    </PaperProvider>
+  )
 }
+
+export default _layout
