@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font'
 import { NativeWindStyleSheet } from "nativewind";
 import { PaperProvider} from 'react-native-paper';
 import customPaperTheme from '@/constants/customPaperTheme';
+import { LogBox } from 'react-native';
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -43,12 +44,16 @@ const _layout = () => {
 
   if (!fontsLoaded &&  !error) return null;
 
+  LogBox.ignoreAllLogs();
+
 
   return (
     <PaperProvider theme={customPaperTheme}>
       <Stack>
           <Stack.Screen name='index' options={{headerShown: false}}/>
           <Stack.Screen name='signup' options={{headerShown: false}}/>
+          <Stack.Screen name='otpverification' options={{headerShown: false}}/>
+          <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
       </Stack>
     </PaperProvider>
   )

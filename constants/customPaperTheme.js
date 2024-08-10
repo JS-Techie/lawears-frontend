@@ -2,7 +2,7 @@
 import { DefaultTheme } from 'react-native-paper';
 import { configureFonts } from 'react-native-paper';
 import tailwindConfig from '../tailwind.config';
-console.log("THE DEFAULT THEME IIS ::: ", DefaultTheme)
+// console.log("THE DEFAULT THEME IIS ::: ", DefaultTheme)
 
 const fontConfig = {
   default: {

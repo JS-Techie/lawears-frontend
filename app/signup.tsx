@@ -1,11 +1,13 @@
 import { Text, View, KeyboardAvoidingView, Platform, Image} from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React from 'react'
 import { TextInput, Button, Checkbox  } from 'react-native-paper'
 import CorpLogoLight from '../assets/logo/CorpLogoLight.svg'
+import { Link } from 'expo-router'
 
 const signup = () => {
   return (
-    <View className="h-[100%] bg-white">
+    <KeyboardAvoidingView className="h-[100%] bg-white">
         <View className="h-[10%] flex pt-10 items-center">
             <CorpLogoLight width={130} height={75}/>
         </View>
@@ -27,7 +29,11 @@ const signup = () => {
           </View>
           <Text className="font-c">I agree to the Terms & Conditions</Text>
         </View>
-          <Button mode='contained' className='w-[85%] h-[45%] items-center justify-center' labelStyle={{ fontSize: 19, fontFamily: 'Caros-Medium' }}>Verify OTP and Sign Up</Button>
+          <Button mode='contained' className='w-[85%] h-[45%] items-center justify-center' labelStyle={{ fontSize: 19, fontFamily: 'Caros-Medium' }}>
+            <Link href={'/otpverification'}>
+              Verify OTP and Sign Up
+            </Link>
+          </Button>
         </View>
         <View className="h-[10%] justify-start items-center">
           <Text>
@@ -35,7 +41,7 @@ const signup = () => {
             <Text className="font-cmedium text-secondary">Login </Text>
           </Text>
         </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

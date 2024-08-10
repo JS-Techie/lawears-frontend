@@ -17,7 +17,7 @@ module.exports = {
         error: {
           DEFAULT: '#CD3D64',
           foreground: '#CD3D64',
-          background: 'FEE8E7'
+          background: '#FEE8E7'
         },
         success: {
           DEFAULT: '#09825D',
@@ -34,7 +34,9 @@ module.exports = {
           0: '#075996',
           1: '#3A97D4',
           2: '#DFF0FF',
-          3: '#5F90D7'
+          3: '#5F90D7',
+          4: '#E4EEF7',
+          5: '#CEDDF3'
         },
         Neutral: {
           DEFAULT: '#1A1A1A',
