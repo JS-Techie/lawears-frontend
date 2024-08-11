@@ -18,7 +18,7 @@ const signup = () => {
         </View>
         <View className="h-[50%] justify-center items-center py-10">
           <TextInput className='w-[85%] my-5' label='Name' placeholder='Enter Full Name'/>
-          <TextInput className='w-[85%] my-5' label='Phone Number' placeholder='Enter Phone Number'/>
+          <TextInput className='w-[85%] my-5' label='Phone Number' keyboardType='numeric' maxLength={10} placeholder='Enter Phone Number'/>
           <TextInput className='w-[85%] my-5' label='Email ID' placeholder='Enter Email Id'/>
           <TextInput className='w-[85%] my-5' label='Password' placeholder='Enter Password'/>
         </View>
@@ -38,7 +38,7 @@ const signup = () => {
         <View className="h-[10%] justify-start items-center">
           <Text>
             <Text className="font-cmedium text-Neutral-11">Already have an account ? </Text>
-            <Text className="font-cmedium text-secondary">Login </Text>
+            <Text className="font-cmedium text-secondary"><Link href={'/login'}>Login </Link></Text>
           </Text>
         </View>
     </KeyboardAvoidingView>

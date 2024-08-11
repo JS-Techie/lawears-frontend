@@ -104,5 +104,3 @@ const TabLayout = () => {
 }
 
 export default TabLayout
-
-const styles = StyleSheet.create({})

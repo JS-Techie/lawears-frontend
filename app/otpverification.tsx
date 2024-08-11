@@ -81,12 +81,12 @@ const otpverification = () => {
         }
 
         
-        <View className="h-[15%] justify-evenly items-center">
+        <View className="h-[10%] justify-end items-center">
           {
             !otpVerificationSuccess ? 
                 <Button 
                     mode='contained' 
-                    className='w-[85%] h-[45%] items-center justify-center' 
+                    className='w-[85%] h-[60%] items-center justify-center' 
                     labelStyle={{ fontSize: 19, fontFamily: 'Caros-Medium' }}
                     onPress={handleOTPSubmit}
                     >
@@ -97,17 +97,17 @@ const otpverification = () => {
             :
                 <Button 
                     mode='contained' 
-                    className='w-[85%] h-[45%] items-center justify-center' 
+                    className='w-[85%] h-[60%] items-center justify-center' 
                     labelStyle={{ fontSize: 19, fontFamily: 'Caros-Medium' }}
                     onPress={handleOTPSubmit}
                     >
-                  <Link href={'/otpverification'}>
+                  <Link href={'/login'}>
                     Login
                   </Link>
                 </Button>
           }
         </View>
-        <View className="h-[10%] justify-start items-center">
+        <View className="h-[5%] justify-center items-center">
           <Text>
             <Text className="font-cmedium text-Neutral-11">Didn't receive OTP ? </Text>
             <Text className="font-cmedium text-secondary">Resend </Text>

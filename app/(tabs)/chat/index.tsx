@@ -1,17 +1,3 @@
-// import { StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-
-// const chat = () => {
-//   return (
-//     <View>
-//       <Text>chat</Text>
-//     </View>
-//   )
-// }
-
-// export default chat
-
-
 import React, { useEffect, useCallback, useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
@@ -21,11 +7,11 @@ import { GiftedChat, InputToolbar, Send, Actions, Bubble, Composer } from 'react
 import { FontAwesome } from '@expo/vector-icons';
 
 
-import CloseButton from '../../assets/logo/VectorcloseButton.svg'
-import EastBackButton from '../../assets/logo/eastbackButton.svg'
-import InfoButton from '../../assets/logo/VectorinfoIcon.svg'
-import SendButton from '../../assets/logo/VectorMessageSend.svg'
-import AttachmentButton from '../../assets/logo/VectormessageAttachement.svg'
+import CloseButton from '../../../assets/logo/VectorcloseButton.svg'
+import EastBackButton from '../../../assets/logo/eastbackButton.svg'
+import InfoButton from '../../../assets/logo/VectorinfoIcon.svg'
+import SendButton from '../../../assets/logo/VectorMessageSend.svg'
+import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
 
 
 // const Chat = ({ navigation }) => {
@@ -82,7 +68,7 @@ import AttachmentButton from '../../assets/logo/VectormessageAttachement.svg'
                 user: {
                     _id: 2,
                     name: 'React Native',
-                    avatar: require('../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg'),
+                    avatar: require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg'),
                 },
             },
         ])
@@ -97,7 +83,7 @@ import AttachmentButton from '../../assets/logo/VectormessageAttachement.svg'
                     <EastBackButton height={25} width={25}/>
                     <View className='flex-row w-[60%] mx-5 items-center justify-start'>
                         <View className='flex items-center justify-evenly border-4 border-Blue-5 rounded-full'>
-                         <Avatar.Image size={70} source={require('../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')}/>
+                         <Avatar.Image size={70} source={require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')}/>
                          {/* <Image source={require('../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')} className='w-[10%] h-[10%]'/> */}
                         </View>
                         <View className='flex items-start justify-center mx-1'>
@@ -121,7 +107,7 @@ import AttachmentButton from '../../assets/logo/VectormessageAttachement.svg'
                 user={{
                     _id: 'THEONE@THEONE.COM',
                     name: 'THE ONE',
-                    avatar: require('../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')
+                    avatar: require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')
                 }}
                 minInputToolbarHeight={100}
                 placeholder='Type your concerns in ...'
