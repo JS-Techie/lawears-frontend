@@ -5,6 +5,7 @@ import React from 'react'
 
 import QuestionChatIcon from '../../../assets/logo/GroupQuestionLogoHomePageAskYourLegalQueries.svg'
 import ButtonRoundCircle from '../../../assets/logo/ButtonsRoundCircle.svg'
+import { Link } from 'expo-router'
 
 const home = () => {
   return (
@@ -23,7 +24,9 @@ const home = () => {
           </View>
           <View className='flex-row justify-between items-center h-[40%] rounded-xl mx-[5%] mb-[5%] mt-[2.5%] shadow-none'>
             <Text className='text-xl font-cmedium text-Neutral-6 w-[70%] text-start'>Get matched with one of our experts and get immediate legal advice</Text>
-            <ButtonRoundCircle height={60} width={60}/>
+            <Link href={'(tabs)/home/query'}>
+              <ButtonRoundCircle height={60} width={60}/>
+            </Link>
           </View>
         </Card>
       </View> 

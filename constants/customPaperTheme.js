@@ -34,7 +34,7 @@ const customPaperTheme = {
     secondary: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',
     outline: tailwindConfig.theme.extend.colors.primary.DEFAULT || '#000',
     backdrop: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',
-    background: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',
+    background: tailwindConfig.theme.extend.colors.Neutral['10'] || '#000',
     inversePrimary: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',
     primaryContainer: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',
     secondaryContainer: tailwindConfig.theme.extend.colors.secondary.DEFAULT || '#000',

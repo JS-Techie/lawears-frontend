@@ -21,6 +21,10 @@ const _layout = () => {
 
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="query" options={{ headerShown: false }} />
+        <Stack.Screen name="reviewquery" options={{ headerShown: false }} />
+        <Stack.Screen name="startconsultancy" options={{ headerShown: false }} />
+        
       </Stack>
     </>
   )
