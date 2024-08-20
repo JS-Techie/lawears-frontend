@@ -48,3 +48,19 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+
+screen change ---
+
+most sized font and display ---
+ LOG  THE WIDTH OF THE WINDOW ::::  320
+ LOG  THE HEIGHT OF THE WINDOW ::::  628.4444444444445
+
+least sized font and display ---
+ LOG  THE WIDTH OF THE WINDOW ::::  484.03359017090406
+ LOG  THE HEIGHT OF THE WINDOW ::::  975.4621379694191
+
+midsize font and display ---
+ LOG  THE WIDTH OF THE WINDOW ::::  376.47058354208724
+ LOG  THE HEIGHT OF THE WINDOW ::::  747.7124089794232

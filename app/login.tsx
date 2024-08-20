@@ -1,33 +1,36 @@
-import { Text, View, KeyboardAvoidingView, Platform, Image} from 'react-native'
+import { Text, View, KeyboardAvoidingView, Platform, Image, useWindowDimensions} from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { TextInput, Button, Checkbox  } from 'react-native-paper'
 import CorpLogoLight from '../assets/logo/CorpLogoLight.svg'
 import PasswordEyeClosed from '../assets/logo/PasswordEyeClosed.svg'
 import { Link } from 'expo-router'
+import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio'
 
 const login = () => {
+  const {width, height} = useWindowDimensions();
+  const fontScaledSizeRatio = FontScaledSizeRatio();
   const [showPassword, setShowPassword] = useState(false); 
 
   return (
-      <KeyboardAvoidingView className="h-[100%] bg-white">
-          <View className="h-[10%] flex pt-10 items-center">
-              <CorpLogoLight width={130} height={75}/>
+      <KeyboardAvoidingView className="h-full bg-white">
+          <View className="h-[13%] flex pt-[10%] items-center">
+            <CorpLogoLight width={width*0.3} height={width*0.15}/>
           </View>
-          <View className="h-[13%] justify-center items-center">
+          <View className="h-[13%] w-full justify-center items-center">
             <Text>
-              <Text className='text-center text-3xl text-Neutral-1 font-cmedium'>Login and </Text>
-              <Text className='text-center text-3xl text-Blue-3 font-cmedium'>get expert legal</Text>
+              <Text className='text-center text-Neutral-1 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*17)}}>Login and </Text>
+              <Text className='text-center text-Blue-3 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*17)}}>get expert legal</Text>
             </Text>
             <Text>
-              <Text className='text-center text-3xl text-Blue-3 font-cmedium'>advice </Text>
-              <Text className='text-center text-3xl text-Neutral-1 font-cmedium'>with a few clicks</Text>
+              <Text className='text-center text-Blue-3 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*17)}}>advice </Text>
+              <Text className='text-center text-Neutral-1 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*17)}}>with a few clicks</Text>
             </Text>
           </View>
-          <View className="h-[20%] justify-center items-center py-10">
-            <TextInput className='w-[85%] my-5' label='Phone Number' keyboardType='numeric' maxLength={10} placeholder='Enter registered phone number'/>
+          <View className="h-[20%] justify-center items-center my-[7%]">
+            <TextInput className='w-[85%] mb-[7%]' label='Phone Number' keyboardType='numeric' maxLength={10} placeholder='Enter registered phone number'/>
             <TextInput 
-                className='w-[85%] my-5' 
+                className='w-[85%]' 
                 label='Password' 
                 secureTextEntry={!showPassword} 
                 right={
@@ -37,10 +40,10 @@ const login = () => {
                         />
                       } 
                 placeholder='Enter password'/>
-            <Text className='underline text-Blue-0 text-base -mt-[2%] w-[85%] text-right'>Forgot Password ?</Text>
+            <Text className='underline text-Blue-0 text-base mt-[1%] w-[85%] text-right' style={{fontSize: Math.round(fontScaledSizeRatio*10)}}>Forgot Password ?</Text>
           </View>
           <View className="h-[10%] justify-end items-center">
-            <Button mode='contained' className='w-[85%] h-[60%] items-center justify-center' labelStyle={{ fontSize: 19, fontFamily: 'Caros-Medium' }}>
+            <Button mode='contained' className='w-[85%] h-[60%] items-center justify-center' labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*13), fontFamily: 'Caros-Medium' }}>
               <Link href={'/home'}>
                 Login
               </Link>
@@ -48,8 +51,8 @@ const login = () => {
           </View>
           <View className="h-[5%] justify-center items-center">
             <Text>
-              <Text className="font-cmedium text-Neutral-11">Don't have an account ? </Text>
-              <Text className="font-cmedium text-secondary"><Link href={'/signup'}>Sign Up </Link></Text>
+              <Text className="font-cmedium text-Neutral-11" style={{fontSize: Math.round(fontScaledSizeRatio*10)}}>Don't have an account ? </Text>
+              <Text className="font-cmedium text-secondary"  style={{fontSize: Math.round(fontScaledSizeRatio*10)}}><Link href={'/signup'}>Sign Up </Link></Text>
             </Text>
           </View>
       </KeyboardAvoidingView>

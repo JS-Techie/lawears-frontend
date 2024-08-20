@@ -1,17 +1,13 @@
 import React, { useEffect, useCallback, useState, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, useWindowDimensions } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 // import { auth, db } from '../firebase';
 // import { signOut } from 'firebase/auth';
 import { GiftedChat, InputToolbar, Send, Actions, Bubble, Composer } from 'react-native-gifted-chat';
-import { FontAwesome } from '@expo/vector-icons';
 
-
-import CloseButton from '../../../assets/logo/VectorcloseButton.svg'
-import EastBackButton from '../../../assets/logo/eastbackButton.svg'
-import InfoButton from '../../../assets/logo/VectorinfoIcon.svg'
-import SendButton from '../../../assets/logo/VectorMessageSend.svg'
-import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
+import SendButton from '@/assets/logo/VectorMessageSend.svg'
+import AttachmentButton from '@/assets/logo/VectormessageAttachement.svg'
+import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 
 
 // const Chat = ({ navigation }) => {
@@ -26,7 +22,30 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
         avatar: string;
       };
     }
+      
+    const {width, height} = useWindowDimensions();
+    const fontScaledSizeRatio = FontScaledSizeRatio();
     const [messages, setMessages] = useState<Message[]>([]);
+    const [chatSpaceMarginBottom, setChatSpaceMarginBottom] = useState('');
+    const [x, setX] = useState(-300)
+
+    console.log("WIDTH AND HEIGHT ::: ", width," ----- ", height)
+    // useEffect(() => {
+    //   const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+    //     // setChatSpaceMarginBottom(e.endCoordinates.height);
+    //     console.log("THE END COORDINATE ATTACK ::::: ", e.endCoordinates)
+    //     setChatSpaceMarginBottom('8%');
+    //   });
+  
+    //   const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+    //     setChatSpaceMarginBottom('');
+    //   });
+  
+    //   return () => {
+    //     keyboardDidShowListener.remove();
+    //     keyboardDidHideListener.remove();
+    //   };
+    // }, []);
 
     const renderInputToolbar = (props:any) => {
         return <CustomInputToolbar {...props} />;
@@ -39,6 +58,43 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
       const renderActions = (props:any) => {
         return <CustomActions {...props} />;
       };
+
+      const CustomInputToolbar = ((props:any) => {
+        return (
+          <InputToolbar
+            {...props}
+            containerStyle={{
+              backgroundColor: '#F1F1F1',
+              borderRadius: 10,
+              marginHorizontal: width*0.03,
+              marginBottom: width*0.03,
+              padding: width*0.01
+            }}
+          />
+        );
+      });
+      
+      const CustomSend = ((props:any) => {
+        return (
+          <Send {...props}>
+            <View>
+                <SendButton width={width*0.06} height={width*0.06} />
+            </View>
+          </Send>
+        );
+      });
+      
+      const CustomActions = ((props:any) => {
+        return (
+          <Actions
+            {...props}
+            containerStyle={{
+              marginHorizontal: width*0.02,
+            }}
+            icon={() => <AttachmentButton width={width*0.06} height={width*0.06} />}
+          />
+        );
+      });
    
     // useLayoutEffect(() => {
     //     navigation.setOptions({
@@ -68,7 +124,7 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
                 user: {
                     _id: 2,
                     name: 'React Native',
-                    avatar: require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg'),
+                    avatar: require('@/assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg'),
                 },
             },
         ])
@@ -76,40 +132,22 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
     const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
     }, []);
+
     return (
         <View className='h-full bg-white flex-1'>
-            <View className='h-[15%] bg-Blue-4'>
-                <View className='flex-row mt-[10%] mx-auto items-center justify-center'>
-                    <EastBackButton height={25} width={25}/>
-                    <View className='flex-row w-[60%] mx-5 items-center justify-start'>
-                        <View className='flex items-center justify-evenly border-4 border-Blue-5 rounded-full'>
-                         <Avatar.Image size={70} source={require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')}/>
-                         {/* <Image source={require('../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')} className='w-[10%] h-[10%]'/> */}
-                        </View>
-                        <View className='flex items-start justify-center mx-1'>
-                            <Text className='text-3xl font-cbold text-Neutral-2 text-start'>Dwight Schrute</Text>
-                            <Text className='text-lg font-c text-primary-background text-start'>Identity Theft Lawyer</Text>
-                        </View>
-                    </View>
-                    <View className='flex mr-5'>
-                        <InfoButton height={20} width={20}/>
-                    </View>
-                    <View className='flex mr-5'>
-                        <CloseButton height={20} width={20}/>
-                    </View>
-                </View>
-            </View>
 
+          <KeyboardAvoidingView style={{flex: 1, marginBottom: width*0.03}}>
             <GiftedChat
                 messages={messages}
                 showAvatarForEveryMessage={true}
+                onInputTextChanged={()=> {}}
                 onSend={(messages : any) => onSend(messages)}
                 user={{
                     _id: 'THEONE@THEONE.COM',
                     name: 'THE ONE',
-                    avatar: require('../../../assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')
+                    avatar: require('@/assets/logo/8fb116150a2bba383a6ed8ecd0a216c1a6325e40_full.jpg')
                 }}
-                minInputToolbarHeight={100}
+                minInputToolbarHeight={width*0.25}
                 placeholder='Type your concerns in ...'
                 renderInputToolbar={renderInputToolbar}
                 renderSend={renderSend}
@@ -120,7 +158,8 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
                           {...props}
                         textInputStyle={{ 
                             color: '#484E51',
-                            fontFamily: 'Caros'
+                            fontFamily: 'Caros',
+                            fontSize: Math.round(fontScaledSizeRatio*11)
                         }}
                         />
                     )
@@ -142,59 +181,25 @@ import AttachmentButton from '../../../assets/logo/VectormessageAttachement.svg'
                         textStyle={{
                           left: {
                             color: "#000",
-                            padding: 10,
-                            fontFamily: 'Caros'
+                            padding: width*0.02,
+                            fontFamily: 'Caros',
+                            fontSize: Math.round(fontScaledSizeRatio*11)
                           },
                           right: {
                             color: "#000",
-                            padding: 10,
-                            fontFamily: 'Caros'
+                            padding: width*0.02,
+                            fontFamily: 'Caros',
+                            fontSize: Math.round(fontScaledSizeRatio*11)
                           },
                         }}
                       />
                     );
                 }}
             />
+            </KeyboardAvoidingView>
         </View>
     );
 }
-
-const CustomInputToolbar = ((props:any) => {
-    return (
-      <InputToolbar
-        {...props}
-        containerStyle={{
-          backgroundColor: '#F1F1F1',
-          borderRadius: 10,
-          marginHorizontal: 10,
-          marginBottom: 15,
-          padding: 5
-        }}
-      />
-    );
-  });
-  
-  const CustomSend = ((props:any) => {
-    return (
-      <Send {...props}>
-        <View>
-            <SendButton width={24} height={24} />
-        </View>
-      </Send>
-    );
-  });
-  
-  const CustomActions = ((props:any) => {
-    return (
-      <Actions
-        {...props}
-        containerStyle={{
-          marginHorizontal: 5,
-        }}
-        icon={() => <AttachmentButton width={24} height={24} />}
-      />
-    );
-  });
   
 
 export default Chat;
