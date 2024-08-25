@@ -11,17 +11,6 @@ const Homepage = () => {
 
   return (
     <View className="flex-1 items-center justify-center bg-Neutral-12">
-      {/* <Text className="font-cthin text-3xl text-white ">Homepage</Text>
-        <Button mode='outlined'> 
-          <Link href={'/signup'}>
-              Press 
-          </Link>     
-        </Button>
-        <Button mode='outlined'> 
-          <Link href="/(tabs)/home">
-              + Press
-          </Link>     
-        </Button> */}
         <View className='flex w-full items-center justify-evenly h-[20%]'>
 
           <TouchableRipple rippleColor="rgba(255, 255, 255, 0.2)" className='flex w-full h-[30%] justify-center items-center' onPress={()=> {}}>
@@ -70,6 +59,3 @@ const Homepage = () => {
 }
 
 export default Homepage
-
-
-

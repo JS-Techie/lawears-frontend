@@ -1,4 +1,5 @@
 import { Text, View, KeyboardAvoidingView, Platform, Image, useWindowDimensions} from 'react-native'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { useState } from 'react'
 import { TextInput, Button, Checkbox  } from 'react-native-paper'
@@ -7,10 +8,29 @@ import PasswordEyeClosed from '../assets/logo/PasswordEyeClosed.svg'
 import { Link } from 'expo-router'
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio'
 
-const login = () => {
+
+import { login } from '@/api/auth'
+
+const Login = () => {
+  const router = useRouter();
   const {width, height} = useWindowDimensions();
   const fontScaledSizeRatio = FontScaledSizeRatio();
   const [showPassword, setShowPassword] = useState(false); 
+
+  const handleLogin = async () => {
+    const loginRequest = {
+      email_id: 'one@one.com',
+      password: '1234',
+    };
+  
+    const [response, status] = await login(loginRequest);
+    if(status) {
+      console.log(response.status)
+      // if(response && response.status == 200)
+        router.push('/home');
+    }
+  };
+  
 
   return (
       <KeyboardAvoidingView className="h-full bg-white">
@@ -43,10 +63,13 @@ const login = () => {
             <Text className='underline text-Blue-0 text-base mt-[1%] w-[85%] text-right' style={{fontSize: Math.round(fontScaledSizeRatio*10)}}>Forgot Password ?</Text>
           </View>
           <View className="h-[10%] justify-end items-center">
-            <Button mode='contained' className='w-[85%] h-[60%] items-center justify-center' labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*13), fontFamily: 'Caros-Medium' }}>
-              <Link href={'/home'}>
-                Login
-              </Link>
+            <Button 
+            mode='contained' 
+            className='w-[85%] h-[60%] items-center justify-center' 
+            labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*13), fontFamily: 'Caros-Medium' }}
+            onPress={handleLogin}
+            >
+              Login
             </Button>
           </View>
           <View className="h-[5%] justify-center items-center">
@@ -59,4 +82,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login

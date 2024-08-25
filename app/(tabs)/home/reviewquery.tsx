@@ -3,98 +3,49 @@ import { Button, Card, List, TextInput, Checkbox } from 'react-native-paper'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import * as DocumentPicker from 'expo-document-picker'
-import { Link } from 'expo-router'
+import { useRouter } from 'expo-router'
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio'
 
-interface DocumentPickerType{
-  "mimeType": string,
-  "name": string,
-  "size": number,
-  "uri": string
-}
-
-interface UploadedFiles{
-  'id':number, 
-  'file': DocumentPickerType
-}
+import { useQueryStore } from '@/stores/query'
+import { queryTypeInterface, queryApi, query } from '@/interfaces/query'
+import { fileUploadType } from '@/interfaces/fileUpload'
+import { createRecord } from '@/api/authenticated/query'
 
 const reviewquery = () => {
   
+  const router = useRouter();
   const {width, height} = useWindowDimensions();
   const fontScaledSizeRatio = FontScaledSizeRatio();
   const [queryTypeExpanded, setQueryTypeExpanded] = useState(false);
   const [uploadedFilesExpanded, setUploadedFilesExpanded] = useState(true);
-  const  [selectedQueryType, setSelectedQueryType] = useState<string[]>(["Identity Theft"]);
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([
-    {
-      id : 1,
-      file: {
-        "mimeType": "image/jpeg",
-        "name": "IMG-20240811-WA0000.jpg",
-        "size": 114773,
-        "uri": "file:///data/user/0/host.exp.exponent/cache/DocumentPicker/c81ba015-7619-4335-8d3e-b9a0c4e0e9a7.jpg"
-      }
-    },
-    {
-      id: 2,
-      file:  {
-        "mimeType": "image/png",
-        "name": "Screenshot_20240810-020232.png",
-        "size": 380078,
-        "uri": "file:///data/user/0/host.exp.exponent/cache/DocumentPicker/d1a3cee8-d8c7-438c-b3ae-55b0c220c7f4.png"
-       }
-    },
-    {
-      id: 3,
-      file:  {
-        "mimeType": "image/png",
-        "name": "Screenshot_20240810-020232.png",
-        "size": 380078,
-        "uri": "file:///data/user/0/host.exp.exponent/cache/DocumentPicker/d1a3cee8-d8c7-438c-b3ae-55b0c220c7f4.png"
-     }
-    }
-  ])
+  const savedQuery = useQueryStore((state : any) => state.query);
+  const [selectedQueryType, setSelectedQueryType] = useState<queryTypeInterface[]>(savedQuery.query_types);
+  const [uploadedFiles, setUploadedFiles] = useState<fileUploadType[]>(savedQuery.documents)
+  const [queryDescription, setQueryDescription] = useState<string>(savedQuery.description)
   
 
-  const QueryType = [
-    { id: 1, title: 'Identity Theft' },
-    { id: 2, title: 'Land Dispute' },
-    { id: 3, title: 'Environmental' },
-    { id: 4, title: 'Civil' },
-    { id: 5, title: 'Criminal' },
-    { id: 6, title: 'Theft' },
-    { id: 7, title: 'Customary' },
-    { id: 8, title: 'Religious' }
-  ]
+  const handleQuerySubmission = async() => {
 
-  const fileUploadHandler = async() => {
-    try{
-      const file = await DocumentPicker.getDocumentAsync({
-        type: "*/*",
-        multiple: true,
-        copyToCacheDirectory: true
-      });
-
-      if (file.assets != null){
-          setUploadedFiles((prev) => {
-            let fileId = 0;
-            prev.length != 0 ? fileId = prev[prev.length -1].id : fileId = 0;
-            const dogtaggedUploadedFiles = file.assets.map((asset) => ({
-                id: fileId+1,
-                file: asset
-              })
-            )
-            return [...prev, ...dogtaggedUploadedFiles as UploadedFiles[]]
-
-          })
-      }
-    }catch(error){
-        console.log(error)
+    const structuredQuery : queryApi = {
+      name : savedQuery.name,
+      query_types : selectedQueryType.map((item : queryTypeInterface) => item.id),
+      // documents : uploadedFiles,
+      documents : [],
+      description : queryDescription
     }
-  }
 
-  const fileDeletionHandler = (fileId: number) => {
-    setUploadedFiles(uploadedFiles.filter((file)=> file.id != fileId))
+    console.log("THE STRUCTURED QUERY :::: ", structuredQuery)
+    // const [response, status] =  await createRecord(structuredQuery);
+    const response = {status : 200}
+    const status = true
+    console.log("THE RESPONSE ::: ", response)
+    console.log("THE STTUS ::: ", status)
+    
+    if(status) {
+      console.log("HERER INSIDE OK STATUS")
+      if(response && response.status === 200)
+        router.push('/(tabs)/home/startconsultancy')
+    }
   }
 
   return (
@@ -107,24 +58,14 @@ const reviewquery = () => {
         <View className={`max-h-[20%] ${queryTypeExpanded ? 'mb-[13%]' : 'mb-[5%]'}`}>
             <Text className='text-Neutral-6 font-cmedium pb-[2%]' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Legal query type</Text>
             <List.Accordion
-              title= {selectedQueryType.length === 0 ? <Text className='text-Neutral-7' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Select legal query category/s</Text> : <Text className='text-primary-foreground pl-1' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{selectedQueryType.join(", ")}</Text>}
+              title= {selectedQueryType.length === 0 ? <Text className='text-Neutral-7' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Select legal query category/s</Text> : <Text className='text-primary-foreground pl-1' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{selectedQueryType.map(item => item.title).join(", ")}</Text>}
               expanded={queryTypeExpanded}
-              onPress={() => {setQueryTypeExpanded(!queryTypeExpanded)}}>
-              <ScrollView className='max-h-[70%] '>
-                {QueryType.map((type) => (
-                  <Text
-                    key={type.id}
-                    className='py-[5%] text-Neutral-2 font-cmedium pl-[5%]'
-                    style={{fontSize: Math.round(fontScaledSizeRatio*11)}}
-                    // onPress={() => {setSelectedQueryType((prev) => [...prev, type.title]); setQueryTypeExpanded(!queryTypeExpanded)}}
-                  >{type.title}</Text>
-                ))}
-              </ScrollView>
+              >.
             </List.Accordion>
         </View>
         <View className='flex h-[15%] justify-between mb-[10%] '>
           <Text className='text-Neutral-6 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Your query</Text>
-          <TextInput multiline placeholder='Type your legal query here' style={{height:'80%', fontSize: Math.round(fontScaledSizeRatio*11)}} className='rounded-lg' >I am facing an Issue regarding Identity Theft.</TextInput>
+          <TextInput multiline placeholder='Type your legal query here' value={queryDescription} style={{height:'80%', fontSize: Math.round(fontScaledSizeRatio*11)}} className='rounded-lg'/>
         </View>
 
         <View className=' max-h-[20%] mb-[10%]'>
@@ -134,10 +75,9 @@ const reviewquery = () => {
             onPress={()=> {setUploadedFilesExpanded(true)}}>
             <ScrollView className='max-h-[70%] '>
               {uploadedFiles.map((eachFile) => (
-                <View key={eachFile.id} className='flex-row py-[2%] pl-[5%] justify-between items-center'>
-                  <Text className='text-Neutral-2 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{eachFile.file.name}</Text>
-                  <Button className='h-[120%] w-[20%] pt-[2%]'>
-                    {/* <CloseIcon height={13} width={13} /> */}.
+                <View className='flex-row py-[2%] pl-[5%] justify-between items-center'>
+                  <Text className='text-Neutral-2 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{eachFile.name}</Text>
+                  <Button className='h-[120%] w-[20%] pt-[2%]'>.
                   </Button>
                 </View>
               ))}
@@ -153,10 +93,13 @@ const reviewquery = () => {
         </View>
 
         <View className="h-[10%] justify-end items-center">
-          <Button mode='contained' className='w-full h-[65%] items-center justify-center' labelStyle={{fontSize: Math.round(fontScaledSizeRatio*11), fontFamily: 'Caros-Medium' }}>
-            <Link href={'/(tabs)/home/startconsultancy'}>
+          <Button 
+            mode='contained'
+            className='w-full h-[65%] items-center justify-center'
+            labelStyle={{fontSize: Math.round(fontScaledSizeRatio*11), fontFamily: 'Caros-Medium' }}
+            onPress={handleQuerySubmission}
+            >
               Proceed to pay
-            </Link>
           </Button>
         </View>
 

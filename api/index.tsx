@@ -1,8 +1,11 @@
 const apiUrls = () => {
-    const baseUrl = 'http://localhost:8000/';
+    const host = 'http://localhost:8000';
+    const versionPrefix = '/api/v1';
+    const baseUrl = host +  versionPrefix;
 
     return {
-        customerFetch: `${baseUrl}/customer/fetch`
+        query: `${baseUrl}/query`,
+        auth:  `${baseUrl}/auth`
     }
 }
 
