@@ -26,12 +26,22 @@ const Login = () => {
       if (response.success) {
         console.log('Access token:', response.data.access_token);
         await AsyncStorage.setItem('access_token', response.data.access_token);
-        
+        await AsyncStorage.setItem('current_user', response.data.user);
+
+
+        if (response.data.role == 'CUSTOMER'){
+          router.push('/home');
+        }else{
+          router.push('/advocate/home');
+        }
  
-        router.push('/home');
+       
       } else {
         Alert.alert(response.dev_msg, response.client_msg, [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
+          { text: 'OK', onPress: () => {
+            setUsername('')
+            setPassword('')
+          }},
         ]);
       }
     } catch (error) {
@@ -58,7 +68,7 @@ const Login = () => {
         <TextInput
           className='w-[85%] mb-[7%]'
           label='Email Id'
-          placeholder='Enter registered phone number'
+          placeholder='Enter registered email ID'
           value={username}
           onChangeText={text => setUsername(text)}
         />

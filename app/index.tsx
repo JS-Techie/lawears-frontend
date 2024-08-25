@@ -5,6 +5,10 @@ import { TouchableRipple } from 'react-native-paper';
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import {TextEncoder} from 'text-encoding';
+
+// global.TextEncoder = TextEncoder;
+
 const Homepage = () => {
   const { width } = useWindowDimensions();
   const fontScaledSizeRatio = FontScaledSizeRatio();
