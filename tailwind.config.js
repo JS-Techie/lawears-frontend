@@ -27,7 +27,7 @@ module.exports = {
         Yellow: {
           DEFAULT: '#DD8604',
           0: '#DD8604',
-          1: 'FCF3DE',
+          1: '#FCF3DE',
         },
         Blue: {
           DEFAULT: '3A97D4',
@@ -36,7 +36,8 @@ module.exports = {
           2: '#DFF0FF',
           3: '#5F90D7',
           4: '#E4EEF7',
-          5: '#CEDDF3'
+          5: '#CEDDF3',
+          6: '#E8EFF8'
         },
         Neutral: {
           DEFAULT: '#1A1A1A',

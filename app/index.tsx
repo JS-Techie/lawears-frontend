@@ -16,20 +16,11 @@ const Homepage = () => {
   return (
 
     <SafeAreaView className="flex h-screen bg-Neutral-12 items-center">
-         <Image
+        <Image
         source={require('@/assets/images/logo.png')}
         style={{ width: width * 0.3, height: width * 0.3 }}
         resizeMode="contain"
       />
-      <View className="flex-1 justify-end items-center">
-   
-        <Text className="w-full text-4xl text-white font-cbold text-center">I am a</Text>
-      </View>
-
-
-      {/* Add the logo image from assets/images */}
-   
-
       <View className="flex-2 justify-center items-center h-1/3">
         <TouchableRipple rippleColor="rgba(255, 255, 255, 0.2)" className="flex w-full h-[30%] justify-center items-center" onPress={() => {}}>
           <View className="flex-row h-full w-[85%] justify-start items-center">
@@ -57,7 +48,7 @@ const Homepage = () => {
             </View>
 
             <View className="flex h-full w-[80%] items-start justify-center pl-[10%]">
-              <Link href='/login'>
+              <Link href='/advocate/'>
               <Text className="text-Neutral-13 font-cmedium" style={{ fontSize: Math.round(fontScaledSizeRatio * 30) }}>Advocate</Text>
               </Link>
             </View>
@@ -71,14 +62,4 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-          </TouchableRipple>
-
-        </View>
-
-    </View>
-  )
-}
-
-export default Homepage
 
