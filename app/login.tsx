@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Alert, Text, View, useWindowDimensions } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
@@ -10,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const { width } = useWindowDimensions();
+
   const fontScaledSizeRatio = FontScaledSizeRatio();
   const router = useRouter(); 
   const [showPassword, setShowPassword] = useState(false);
@@ -48,6 +50,8 @@ const Login = () => {
       console.log('Login failed:', error);
     }
   };
+
+  
 
   return (
     <SafeAreaView className="h-full bg-white">
@@ -111,3 +115,5 @@ const Login = () => {
 };
 
 export default Login;
+
+     

@@ -1,45 +1,42 @@
 
 import { Text, View, ScrollView, useWindowDimensions } from 'react-native'
 import { Button, Card, List, TextInput } from 'react-native-paper'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import * as DocumentPicker from 'expo-document-picker'
+import { useQueryStore } from '@/stores/query'
 import { Link } from 'expo-router'
+import { useRouter } from 'expo-router'
 
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio'
-import CloseIcon from '../../../assets/logo/VectorcloseButton.svg'
-
-interface DocumentPickerType{
-  "mimeType": string,
-  "name": string,
-  "size": number,
-  "uri": string
-}
+import CloseIcon from '@/assets/logo/VectorcloseButton.svg'
+import {get, getAll} from '@/api/authenticated/query'
+import { fileUploadType } from '@/interfaces/fileUpload'
+import { query, queryTypeInterface } from '@/interfaces/query'
+import CustomChipAccordion from '@/components/CustomChipAccordian'
 
 interface UploadedFiles{
-  'id':number, 
-  'file': DocumentPickerType
+  'id': number, 
+  'file': fileUploadType
 }
 
-const query = () => {
+const Query = () => {
   
   const {width, height} = useWindowDimensions();
   const fontScaledSizeRatio = FontScaledSizeRatio();
+  const softSaveQuery = useQueryStore((state : any) => state.addQuery);
   const [queryTypeExpanded, setQueryTypeExpanded] = useState(false);
   const [uploadedFilesExpanded, setUploadedFilesExpanded] = useState(false);
-  const  [selectedQueryType, setSelectedQueryType] = useState<string[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([])
-  
+  const [selectedQueryType, setSelectedQueryType] = useState<queryTypeInterface[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([]);
+  const [queryDescription, setQueryDescription] = useState<string>('')
+  const bearerToken = localStorage.getItem('token');
+  const router = useRouter();
 
   const QueryType = [
-    { id: 1, title: 'Identity Theft' },
-    { id: 2, title: 'Land Dispute' },
-    { id: 3, title: 'Environmental' },
-    { id: 4, title: 'Civil' },
-    { id: 5, title: 'Criminal' },
-    { id: 6, title: 'Theft' },
-    { id: 7, title: 'Customary' },
-    { id: 8, title: 'Religious' }
+    { id: '7709fa1a-0f15-4826-8b97-74d0eb06465a', title: 'Contract Drafting' },
+    { id: 'c3daa0af-dc0e-45ce-b06e-b519b80234ac', title: 'Legal Advice' },
+    { id: 'ee15f90f-9f35-47fd-b54f-4a0ac0366fc0', title: 'Document Review' },
+    { id: '90aff834-bb08-473d-9f1d-8e03be3aeb2e', title: 'Dispute Resolution' }
   ]
 
   const fileUploadHandler = async() => {
@@ -72,6 +69,19 @@ const query = () => {
     setUploadedFiles(uploadedFiles.filter((file)=> file.id != fileId))
   }
 
+  const handleQuerySubmission = async() =>{
+
+    const processedDocuments = uploadedFiles.map(uploadedFile => uploadedFile.file)
+    const structuredQuery : query = {
+      name : bearerToken ? bearerToken : Date.now().toString(),
+      query_types : selectedQueryType,
+      documents : processedDocuments,
+      description : queryDescription
+    }
+    softSaveQuery(structuredQuery)
+    router.push('/(tabs)/home/reviewquery');
+  }
+
   return (
     <View className='bg-white h-[100%] items-center'>
       <View className='w-[85%] h-[100%]'>
@@ -83,7 +93,7 @@ const query = () => {
         <View className={`max-h-[20%] ${queryTypeExpanded ? 'mb-[13%]' : 'mb-[5%]'}`}>
             <Text className='text-Neutral-6 font-cmedium pb-[2%]' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Legal query type</Text>
             <List.Accordion
-              title= {selectedQueryType.length === 0 ? <Text className='text-Neutral-7' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Select legal query category/s</Text> : <Text className='text-primary-foreground pl-1' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{selectedQueryType.join(", ")}</Text>}
+              title= {selectedQueryType.length === 0 ? <Text className='text-Neutral-7' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Select legal query category/s</Text> : <Text className='text-primary-foreground pl-1' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>{selectedQueryType.map(item => item.title).join(", ")}</Text>}
               expanded={queryTypeExpanded}
               onPress={() => {setQueryTypeExpanded(!queryTypeExpanded); setUploadedFilesExpanded(false)}}>
               <ScrollView className='max-h-[60%] '>
@@ -92,15 +102,16 @@ const query = () => {
                     key={type.id}
                     className='py-[5%] text-Neutral-2 font-cmedium pl-[5%]'
                     style={{fontSize: Math.round(fontScaledSizeRatio*10)}}
-                    onPress={() => {setSelectedQueryType((prev) => [...prev, type.title]); setQueryTypeExpanded(!queryTypeExpanded)}}
+                    onPress={() => {setSelectedQueryType((prev) => [...prev, { id : type.id, title : type.title }]); setQueryTypeExpanded(!queryTypeExpanded)}}
                   >{type.title}</Text>
                 ))}
               </ScrollView>
             </List.Accordion>
+            {/* <CustomChipAccordion listItemData={QueryType} handleItemSelectionChange={(selectedQueryType : queryTypeInterface[]) => setSelectedQueryType(selectedQueryType)} itemsSelected={selectedQueryType} windowHeight={height} windowWidth={width}/> */}
         </View>
         <View className='flex h-[15%] justify-between mb-[10%] '>
           <Text className='text-Neutral-6 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Your query</Text>
-          <TextInput multiline placeholder='Type your legal query here' style={{height:'80%'}} className='rounded-lg'></TextInput>
+          <TextInput multiline placeholder='Type your legal query here' style={{height:'80%'}} className='rounded-lg' value={queryDescription} onChangeText={(e) => setQueryDescription(e)}></TextInput>
         </View>
 
         <Card className='h-[20%] bg-Neutral-10 rounded-lg shadow-none justify-center items-center border-dashed border-2 border-Neutral-8 mb-[1%]'>
@@ -137,10 +148,12 @@ const query = () => {
         }
 
         <View className="h-[10%] justify-end items-center">
-          <Button mode='contained' className='w-full h-[60%] items-center justify-center' labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*11), fontFamily: 'Caros-Medium' }}>
-            <Link href={'/(tabs)/home/reviewquery'}>
+          <Button 
+              mode='contained' 
+              className='w-full h-[60%] items-center justify-center' 
+              labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*11), fontFamily: 'Caros-Medium' }}
+              onPress={handleQuerySubmission}>
               Review query
-            </Link>
           </Button>
         </View>
 
@@ -149,4 +162,4 @@ const query = () => {
   )
 }
 
-export default query
+export default Query

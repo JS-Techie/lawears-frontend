@@ -14,6 +14,7 @@ const Homepage = () => {
   const fontScaledSizeRatio = FontScaledSizeRatio();
 
   return (
+
     <SafeAreaView className="flex h-screen bg-Neutral-12 items-center">
          <Image
         source={require('@/assets/images/logo.png')}
@@ -24,6 +25,7 @@ const Homepage = () => {
    
         <Text className="w-full text-4xl text-white font-cbold text-center">I am a</Text>
       </View>
+
 
       {/* Add the logo image from assets/images */}
    
@@ -53,6 +55,7 @@ const Homepage = () => {
                 <Text className="text-Neutral-12 font-cbold text-center" style={{ fontSize: Math.round(fontScaledSizeRatio * 24) }}>2</Text>
               </View>
             </View>
+
             <View className="flex h-full w-[80%] items-start justify-center pl-[10%]">
               <Link href='/login'>
               <Text className="text-Neutral-13 font-cmedium" style={{ fontSize: Math.round(fontScaledSizeRatio * 30) }}>Advocate</Text>
@@ -68,3 +71,14 @@ const Homepage = () => {
 };
 
 export default Homepage;
+
+          </TouchableRipple>
+
+        </View>
+
+    </View>
+  )
+}
+
+export default Homepage
+
