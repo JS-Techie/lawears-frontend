@@ -14,5 +14,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "constants/customPaperTheme.js", "tailwind.config.js"  ]
+, "constants/customPaperTheme.js", "tailwind.config.js", "app/advocate/home/index.tsx"  ]
 }

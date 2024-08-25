@@ -55,6 +55,7 @@ const _layout = () => {
           <Stack.Screen name='login' options={{headerShown: false}}/>
           <Stack.Screen name='otpverification' options={{headerShown: false}}/>
           <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
+          <Stack.Screen name='advocate' options={{headerShown: false}}/>
       </Stack>
     </PaperProvider>
   )
