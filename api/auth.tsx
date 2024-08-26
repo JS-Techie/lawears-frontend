@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import apiUrls from './.';
+import {apiUrls} from './.';
 
 
 const urls = apiUrls();

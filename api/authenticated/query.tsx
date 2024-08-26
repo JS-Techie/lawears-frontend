@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import apiUrls from '../.';
+import {apiUrls} from '../.';
 import { queryApi } from '@/interfaces/query';
 
 const urls = apiUrls();
