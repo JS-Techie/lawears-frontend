@@ -15,9 +15,9 @@ const _layout = () => {
       <SafeAreaView className='w-full bg-white h-[13%] justify-end items-center'>
         <View className="flex-row items-center justify-end w-[85%] ">
           <View className='h-full w-[10%] '/>
-          <View className="h-full w-[80%] items-center justify-end">
+          {/* <View className="h-full w-[80%] items-center justify-end">
             <CorpLogoLight width={width*0.3} height={width*0.15}/>
-          </View>
+          </View> */}
           <View className="flex h-full w-[10%] items-center justify-end">
             <View className="items-center justify-center">
               <NotificationIcon width={width*0.06} height={width*0.06}/>

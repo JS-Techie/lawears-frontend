@@ -13,6 +13,8 @@ import {get, getAll} from '@/api/authenticated/query'
 import { fileUploadType } from '@/interfaces/fileUpload'
 import { query, queryTypeInterface } from '@/interfaces/query'
 import CustomChipAccordion from '@/components/CustomChipAccordian'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import apiRequest from '@/api'
 
 interface UploadedFiles{
   'id': number, 
@@ -29,7 +31,7 @@ const Query = () => {
   const [selectedQueryType, setSelectedQueryType] = useState<queryTypeInterface[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([]);
   const [queryDescription, setQueryDescription] = useState<string>('')
-  const bearerToken = localStorage.getItem('token');
+  const [bearerToken,setBearerToken] = useState('');
   const router = useRouter();
 
   const QueryType = [
@@ -69,18 +71,33 @@ const Query = () => {
     setUploadedFiles(uploadedFiles.filter((file)=> file.id != fileId))
   }
 
-  const handleQuerySubmission = async() =>{
+  const handleQuerySubmission = async () => {
+    const processedDocuments = uploadedFiles.map((uploadedFile) => uploadedFile.file);
 
-    const processedDocuments = uploadedFiles.map(uploadedFile => uploadedFile.file)
-    const structuredQuery : query = {
-      name : bearerToken ? bearerToken : Date.now().toString(),
-      query_types : selectedQueryType,
-      documents : processedDocuments,
-      description : queryDescription
+    const structuredQuery = {
+      name: 'A new query!',
+      query_types: ["7e4c2b47-fd12-4d23-b8c4-4c1f8fcae65d"],
+      documents: [],
+      description: queryDescription,
+    };
+
+    try {
+      if (bearerToken) {
+        const response = await apiRequest('/query', 'POST', structuredQuery, {
+          Authorization: `Bearer ${bearerToken}`,
+          'Content-Type': 'application/json',
+        });
+
+        console.log('Query submitted successfully:', response);
+        // router.push('/(tabs)/home/reviewquery');
+      } else {
+        console.error('Bearer token is missing.');
+      }
+    } catch (error) {
+      console.error('Failed to submit query:', error);
     }
-    softSaveQuery(structuredQuery)
-    router.push('/(tabs)/home/reviewquery');
-  }
+  };
+
 
   return (
     <View className='bg-white h-[100%] items-center'>
@@ -153,7 +170,7 @@ const Query = () => {
               className='w-full h-[60%] items-center justify-center' 
               labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*11), fontFamily: 'Caros-Medium' }}
               onPress={handleQuerySubmission}>
-              Review query
+              Submit query
           </Button>
         </View>
 

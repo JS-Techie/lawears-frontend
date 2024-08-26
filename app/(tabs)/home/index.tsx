@@ -47,9 +47,9 @@ const home = () => {
           </View>
           <View className='flex-row justify-between items-center h-[40%] rounded-xl mx-[5%] mb-[5%] mt-[2.5%] shadow-none'>
             <Text className='font-cmedium text-Neutral-6 w-[70%] text-start' style={{fontSize: Math.round(fontScaledSizeRatio*11)}}>Get matched with one of our experts and get immediate legal advice</Text>
-             {/* <Link href={'(tabs)/home/query'}>  */}
+             <Link href={'/home/query'}> 
               <ButtonRoundCircle height={width*0.15} width={width*0.15}/>
-              {/* </Link>  */}
+              </Link> 
           </View>
         </Card>
       </View> 

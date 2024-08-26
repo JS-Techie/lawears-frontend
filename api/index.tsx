@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const baseUrl = 'http://192.168.1.4:8000/api/v1';
+const baseUrl = 'http://localhost:8000/api/v1';
 
 export const apiUrls = () => {
     const host = 'http://localhost:8000';
