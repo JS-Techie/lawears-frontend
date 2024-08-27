@@ -5,12 +5,12 @@ import { ArrowLeft, Bell } from 'lucide-react-native'
 
 const Matching = () => {
     return (
-        <View className='flex flex-col items-center justify-start gap-10 bg-white py-2 '>
+        <View className='flex h-full w-full flex-col items-center justify-start bg-white py-2 '>
             <View className='flex-row w-screen items-center justify-between p-4'>
                 <ArrowLeft className='text-[#00397b]' />
 
                 <Image
-                    source={require('../../../assets/images/logo.png')}
+                    source={require('@/assets/images/logo.png')}
                     style={{ width: 100, height: 50 }}
                     contentFit='fill'
                 />
@@ -18,7 +18,7 @@ const Matching = () => {
             </View>
             <View className='flex items-center justify-center'>
                 <Image
-                    source={require('../../../assets/images/map.png')}
+                    source={require('@/assets/images/map.png')}
                     style={{ width: 350, height: 400 }}
                     contentFit='fill'
                 />

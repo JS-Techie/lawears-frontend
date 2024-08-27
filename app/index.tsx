@@ -18,7 +18,7 @@ const Homepage = () => {
  
   
 
-    <SafeAreaView >
+    <SafeAreaView className='h-full w-full'>
 {/* className="flex h-screen bg-Neutral-12 items-center" */}
       <Matching />
         {/* <Image
@@ -67,4 +67,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-

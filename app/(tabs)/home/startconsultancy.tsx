@@ -29,7 +29,7 @@ const startconsultancy = () => {
         <View className="h-[10%] w-full justify-end items-center">
             <Button 
             mode='contained' 
-            className='w-[85%] h-[60%] items-center justify-center' 
+            className='w-[85%] h-[80%] items-center justify-center' 
             labelStyle={{ fontSize: Math.round(fontScaledSizeRatio*13), fontFamily: 'Caros-Medium' }}
             onPress={()=> router.push('/(tabs)/chat/')}
             >
