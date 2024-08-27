@@ -34,6 +34,8 @@ const Query = () => {
   const [bearerToken,setBearerToken] = useState('');
   const router = useRouter();
 
+  const[caseAccepted,setCase] = useState()
+
   const QueryType = [
     { id: '7709fa1a-0f15-4826-8b97-74d0eb06465a', title: 'Contract Drafting' },
     { id: 'c3daa0af-dc0e-45ce-b06e-b519b80234ac', title: 'Legal Advice' },
@@ -72,24 +74,53 @@ const Query = () => {
   }
 
   const handleQuerySubmission = async () => {
-    const processedDocuments = uploadedFiles.map((uploadedFile) => uploadedFile.file);
-
     const structuredQuery = {
       name: 'A new query!',
       query_types: ["7e4c2b47-fd12-4d23-b8c4-4c1f8fcae65d"],
       documents: [],
       description: queryDescription,
     };
-
+  
     try {
-      if (bearerToken) {
+      const token = await AsyncStorage.getItem('access_token');
+  
+      if (!token) {
+        throw new Error('Bearer token is missing.');
+      }
+
+      
+      if (token) {
         const response = await apiRequest('/query', 'POST', structuredQuery, {
-          Authorization: `Bearer ${bearerToken}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         });
-
+  
         console.log('Query submitted successfully:', response);
-        // router.push('/(tabs)/home/reviewquery');
+        
+      
+        // const session_id = response.data.data.session.id; 
+        const ws = new WebSocket(`ws://localhost:8000/ws/queries`);
+  
+        ws.onopen = () => {
+          console.log('WebSocket connection opened.');
+    
+          // ws.send('Hello Server!');
+        };
+  
+        ws.onmessage = (event) => {
+      
+          console.log('Session Accepted:', event.data);
+          setCase(event.data)
+        };
+  
+        ws.onerror = (error) => {
+          console.error('WebSocket error:', error);
+        };
+  
+        ws.onclose = () => {
+          console.log('WebSocket connection closed.');
+        };
+  
       } else {
         console.error('Bearer token is missing.');
       }
@@ -141,7 +172,8 @@ const Query = () => {
             </Button>
          </View>
         </Card>
-
+          
+          <Text>{caseAccepted}</Text>
 
         {
         uploadedFiles.length > 0 &&

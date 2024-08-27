@@ -48,6 +48,7 @@ const _layout = () => {
 
 
   return (
+    // <></>
     <PaperProvider theme={customPaperTheme}>
       <Stack>
           <Stack.Screen name='index' options={{headerShown: false}}/>
@@ -58,6 +59,8 @@ const _layout = () => {
           <Stack.Screen name='advocate' options={{headerShown: false}}/>
       </Stack>
     </PaperProvider>
+
+  
   )
 }
 

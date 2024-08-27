@@ -6,6 +6,7 @@ import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {TextEncoder} from 'text-encoding';
+import Matching from './(tabs)/home/matching';
 
 // global.TextEncoder = TextEncoder;
 
@@ -14,11 +15,15 @@ const Homepage = () => {
   const fontScaledSizeRatio = FontScaledSizeRatio();
 
   return (
+ 
+  
 
-    <SafeAreaView className="flex h-screen bg-Neutral-12 items-center">
-        <Image
+    <SafeAreaView >
+{/* className="flex h-screen bg-Neutral-12 items-center" */}
+      <Matching />
+        {/* <Image
         source={require('@/assets/images/logo.png')}
-        style={{ width: width * 0.3, height: width * 0.3 }}
+        style={{ width: width * 0.3, height: width * 0.3 }}r
         resizeMode="contain"
       />
       <View className="flex-2 justify-center items-center h-1/3">
@@ -56,7 +61,7 @@ const Homepage = () => {
         </TouchableRipple>
       </View>
 
-      <View className="flex-1"></View>
+      <View className="flex-1"></View> */}
     </SafeAreaView>
   );
 };

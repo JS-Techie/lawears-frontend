@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { useNotificationStore } from '@/stores/notification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiRequest from '@/api';
 
 const AdvocateQueryPage = () => {
   const router = useRouter();
@@ -23,8 +25,49 @@ const AdvocateQueryPage = () => {
     'Contract Drafting', 'Legal Advice'
   ]
 
-  const handleQueryAcceptance = () => {
-    router.push('/advocate/(auth)/(tabs)/chat');
+  const handleQueryAcceptance = async () => {
+    try {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNThiNGY0OTItODE1ZS00YzljLWE4OGQtNjgyZWU3MTQ1NTk2Iiwicm9sZSI6IkFEVk9DQVRFIiwiZXhwIjoxNzI0NzA1NzI5fQ.ejXuxApN58LBjNaIJPGyt_AQIBklrtQqFXEKqfGht7w'
+      //await AsyncStorage.getItem('access_token');
+      console.log(token)
+  
+      if (!token) {
+        throw new Error('Bearer token is missing.');
+      }
+  
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await apiRequest(`/query/accept/${queryId}`, 'PATCH', {}, headers);
+  
+      console.log('Query accepted successfully:', response);
+  
+      // Open connection to ws/queries
+      const ws = new WebSocket(`ws://localhost:8000/ws/queries`);
+  
+      ws.onopen = () => {
+        console.log('WebSocket connection to /queries opened.');
+      };
+  
+      ws.onmessage = (event) => {
+        console.log('Received message:', event.data);
+        // Handle WebSocket messages here
+      };
+  
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+  
+      ws.onclose = () => {
+        console.log('WebSocket connection closed.');
+      };
+  
+      // Proceed to the next screen or handle the response further
+    } catch (error) {
+      console.error('Failed to accept query:', error);
+    }
   };
 
   const handleQueryRejection = () => {

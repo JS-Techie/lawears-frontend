@@ -12,7 +12,7 @@ const _layout = () => {
 
   return (
     <>
-      <SafeAreaView className='w-full bg-white h-[13%] justify-end items-center'>
+      <SafeAreaView className='w-full  h-screenbg-white h-[13%] justify-end items-center'>
         <View className="flex-row items-center justify-end w-[85%] ">
           <View className='h-full w-[10%] '/>
           <View className="h-full w-[80%] items-center justify-end">

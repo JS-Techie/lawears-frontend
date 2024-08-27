@@ -27,6 +27,7 @@ const Login = () => {
 
       if (response.success) {
         console.log('Access token:', response.data.access_token);
+        
         await AsyncStorage.setItem('access_token', response.data.access_token);
         await AsyncStorage.setItem('current_user', response.data.user);
 
