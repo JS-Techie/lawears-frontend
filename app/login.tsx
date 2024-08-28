@@ -27,9 +27,13 @@ const Login = () => {
 
       if (response.success) {
         console.log('Access token:', response.data.access_token);
+
+        console.log("CURRENT USER ROLE : ",response.data.role)
         
         await AsyncStorage.setItem('access_token', response.data.access_token);
         await AsyncStorage.setItem('current_user', response.data.user);
+        await AsyncStorage.setItem('user_role', response.data.role);
+
 
 
         if (response.data.role == 'CUSTOMER'){

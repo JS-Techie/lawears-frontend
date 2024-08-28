@@ -16,8 +16,10 @@ const home = () => {
 
 
   useEffect(() => {
+   
     const fetchUser = async () => {
       try {
+        await AsyncStorage.setItem('customer',"YES")
         const loggedInUser = await AsyncStorage.getItem('current_user');
         if (loggedInUser) {
           setCurrentUser(loggedInUser);

@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {TextEncoder} from 'text-encoding';
 import Matching from './(tabs)/home/matching';
+import Session from './(tabs)/session';
 
 // global.TextEncoder = TextEncoder;
 
@@ -18,8 +19,9 @@ const Homepage = () => {
  
   
 
-    <SafeAreaView className="flex h-screen bg-Neutral-12 items-center">
-
+    // <SafeAreaView className='bg-white' >
+<SafeAreaView className="flex h-screen bg-Neutral-12 items-center" >
+      {/* <Session /> */}
       {/* <Matching /> */}
         <Image
         source={require('@/assets/images/logo.png')}

@@ -112,7 +112,7 @@ const Query = () => {
   return (
     <View className='bg-white h-[100%] items-center'>
       <View className='w-[85%] h-[100%]'>
-        <View className={`h-[15%] justify-center items-center ${queryTypeExpanded || uploadedFilesExpanded ? 'mb-[1%]' : 'mb-[5%]'}`}>
+        <View className={`h-[15%] justify-center items-start ${queryTypeExpanded || uploadedFilesExpanded ? 'mb-[1%]' : 'mb-[5%]'}`}>
             <Text className='text-Neutral-1 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*16)}}>We need a few things from you </Text>
             <Text className='text-Neutral-1 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*16)}}>before we can match you </Text>
             <Text className='text-Neutral-1 font-cmedium' style={{fontSize: Math.round(fontScaledSizeRatio*16)}}>with a legal expert</Text>

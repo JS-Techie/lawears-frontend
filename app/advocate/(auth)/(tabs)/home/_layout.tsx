@@ -18,11 +18,11 @@ const _layout = () => {
           {/* <View className="h-full w-[80%] items-center justify-end">
             <CorpLogoLight width={width*0.3} height={width*0.15}/>
           </View> */}
-          <View className="flex h-full w-[10%] items-center justify-end">
+          {/* <View className="flex h-full w-[10%] items-center justify-end">
             <View className="items-center justify-center">
               <NotificationIcon width={width*0.06} height={width*0.06}/>
             </View>
-          </View>
+          </View> */}
         </View>
       </SafeAreaView>
 

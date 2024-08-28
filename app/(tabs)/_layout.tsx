@@ -52,8 +52,8 @@ const TabLayout: React.FC = () => {
       >
         <Tabs.Screen name='home' options={getTabOptions(HomeTabIcon, 'Home')} />
         <Tabs.Screen name='services' options={getTabOptions(ServiceTabIcon, 'Services')} />
-        {/* <Tabs.Screen name='chat' options={getTabOptions(ChatTabIcon, 'Chat')} /> */}
         <Tabs.Screen name='profile' options={getTabOptions(ProfileTabIcon, 'Profile')} />
+        <Tabs.Screen name='chat' options={getTabOptions(ChatTabIcon, 'DO NOT CLICK!')} />
       </Tabs>
     </View>
   );

@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { useNotificationStore } from '@/stores/notification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AdvocateHomePage = () => {
   const router = useRouter();
@@ -13,13 +14,15 @@ const AdvocateHomePage = () => {
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8000/ws/queries'); 
-    ws.onopen = () => {
+    ws.onopen = async () => {
+      await AsyncStorage.setItem('advocate',"YES")
       console.log('WebSocket connection opened');
     };
 
     ws.onmessage = (e) => {
       const notification = JSON.parse(e.data);
       setNotification(notification);
+      ws.close()
     
       router.push('/advocate/home/query');
     };

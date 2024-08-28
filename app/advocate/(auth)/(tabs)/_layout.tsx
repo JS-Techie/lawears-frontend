@@ -1,89 +1,63 @@
-import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native'
-import { Tabs, Redirect } from 'expo-router'
-import React from 'react'
-import HomeTabIcon from '@/assets/logo/VectorHomeTab.svg'
-import ServiceTabIcon from '@/assets/logo/GroupServiceTab.svg'
-import ChatTabIcon from '@/assets/logo/ChatTab.svg'
-import ProfileTabIcon from '@/assets/logo/GroupProfileTab.svg'
-import tailwindConfig from '@/tailwind.config'
-import { TailwindConfig } from '@/interfaces/tailwindconfig'
-import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio'
+import React from 'react';
+import { View, useWindowDimensions } from 'react-native';
+import { Tabs } from 'expo-router';
+import { SvgProps } from 'react-native-svg';
+import HomeTabIcon from '@/assets/logo/VectorHomeTab.svg';
+import ChatTabIcon from '@/assets/logo/ChatTab.svg';
+import ProfileTabIcon from '@/assets/logo/GroupProfileTab.svg';
 
+type TabIconProps = {
+  color: string;
+  focused: boolean;
+};
 
-const TabLayout = () => {
+const TabLayout: React.FC = () => {
+  const { width, height } = useWindowDimensions();
   
-  const {width, height} = useWindowDimensions();
-  const fontScaledSizeRatio = FontScaledSizeRatio();
-  
+  const tabBarHeight = height * 0.08;
+  const iconSize = width * 0.05;
+
+  const getTabOptions = (Icon: React.FC<SvgProps>, title: string) => ({
+    title,
+    headerShown: false,
+    tabBarIcon: ({ focused }: TabIconProps) => (
+      <View className={`p-[15%] rounded-md ${focused ? 'bg-white' : 'bg-[#f1f1f1]'}`}>
+        <Icon 
+          width={title === 'Chat' ? width * 0.07 : iconSize}
+          height={title === 'Chat' ? width * 0.07 : iconSize}
+          fill={focused ? '#00397b' : '#000'}
+        />
+      </View>
+    ),
+  });
+
   return (
     <View className='flex-1 bg-white'>
-        <Tabs screenOptions={{tabBarShowLabel: false}}>
-            <Tabs.Screen 
-              name='home' 
-              options={
-                  { 
-                    title: 'Home',
-                    headerShown: false,
-                    tabBarStyle: { 
-                      height: height*0.08,
-                      borderTopLeftRadius: width*0.07,
-                      borderTopRightRadius: width*0.07,
-                      backgroundColor: '#F1F1F1'
-                    },
-                    tabBarIcon: ({color, focused}) => (
-                      <View className={`p-[15%] rounded-md ${focused ? 'bg-white' : 'bg-[#f1f1f1]'}`}>
-                        {/* <Image source= {icon} tintColor={focused ? color : tailwindConfig?.theme?.extend?.colors?.Neutral['0'] } resizeMode='contain' className='h-6 w-6'/> */}
-                        <HomeTabIcon height={width*0.05} width={width*0.05} fill={focused ? color : '#000'}/>
-                      </View>
-                    )
-                  }
-                }
-              />
-              <Tabs.Screen 
-              name='chat' 
-              options={
-                  { 
-                    title: 'Chat',
-                    headerShown: false,
-                    tabBarStyle: { 
-                      height: height*0.08,
-                      borderTopLeftRadius: width*0.07,
-                      borderTopRightRadius: width*0.07,
-                      backgroundColor: '#F1F1F1'
-                    },
-                    tabBarIcon: ({color, focused}) => (
-                      <View className={`p-[15%] rounded-md ${focused ? 'bg-white' : 'bg-[#f1f1f1]'}`}>
-                        {/* <Image source= {icon} tintColor={focused ? color : tailwindConfig?.theme?.extend?.colors?.Neutral['0'] } resizeMode='contain' className='h-6 w-6'/> */}
-                        <ChatTabIcon height={width*0.07} width={width*0.07} fill={focused ? color : '#000'}/>
-                      </View>
-                    )
-                  }
-                }
-              />
-              <Tabs.Screen 
-              name='profile' 
-              options={
-                  { 
-                    title: 'Profile',
-                    headerShown: false,
-                    tabBarStyle: { 
-                      height: height*0.08,
-                      borderTopLeftRadius: width*0.07,
-                      borderTopRightRadius: width*0.07,
-                      backgroundColor: '#F1F1F1'
-                    },
-                    tabBarIcon: ({color, focused}) => (
-                      <View className={`p-[15%] rounded-md ${focused ? 'bg-white' : 'bg-[#f1f1f1]'}`}>
-                        {/* <Image source= {icon} tintColor={focused ? color : tailwindConfig?.theme?.extend?.colors?.Neutral['0'] } resizeMode='contain' className='h-6 w-6'/> */}
-                        <ProfileTabIcon height={width*0.05} width={width*0.05} fill={focused ? color : '#000'}/>
-                      </View>
-                    )
-                  }
-                }
-              />
-        </Tabs>
+      <Tabs 
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#00397b',
+          tabBarInactiveTintColor: '#000000',
+          tabBarStyle: { 
+            height: tabBarHeight,
+            borderTopLeftRadius: width * 0.07,
+            borderTopRightRadius: width * 0.07,
+            backgroundColor: '#F1F1F1',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            paddingBottom: 10, // Add some padding at the bottom
+            paddingHorizontal: 10, // Add some horizontal padding
+          },
+        }}
+      >
+        <Tabs.Screen name='home' options={getTabOptions(HomeTabIcon, 'Home')} />
+        <Tabs.Screen name='chat' options={getTabOptions(ChatTabIcon, 'Chat')} />
+        <Tabs.Screen name='profile' options={getTabOptions(ProfileTabIcon, 'Profile')} />
+      </Tabs>
     </View>
-  )
-}
+  );
+};
 
-export default TabLayout
+export default TabLayout;

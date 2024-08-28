@@ -1,70 +1,27 @@
-import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import { Card, Chip } from 'react-native-paper';
 import React from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { useRouter } from 'expo-router';
-
-import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { useNotificationStore } from '@/stores/notification';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import apiRequest from '@/api';
+import { Ionicons } from '@expo/vector-icons';
 
 const AdvocateQueryPage = () => {
   const router = useRouter();
-  const { width, height } = useWindowDimensions();
-  const fontScaledSizeRatio = FontScaledSizeRatio();
-
-  // Get the latest notification from the Zustand store
   const notification = useNotificationStore((state: { notification: any; }) => state.notification);
 
-  // Default values if no notification is available yet
-  const queryId = notification?.query_id || 'N/A';
-  const queryDescription = notification?.description || 'No description available';
-  // const queryTypes = notification?.query_types || [];
-
-  const queryTypes = [
-    'Contract Drafting', 'Legal Advice'
-  ]
+  const queryId = notification?.query_id || '10001';
+  const queryDescription = notification?.description || 'Once upon a time there was a potato in a magical land';
+  const queryTypes = notification?.query_types || ['Environmental', 'Land'];
 
   const handleQueryAcceptance = async () => {
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNThiNGY0OTItODE1ZS00YzljLWE4OGQtNjgyZWU3MTQ1NTk2Iiwicm9sZSI6IkFEVk9DQVRFIiwiZXhwIjoxNzI0NzA1NzI5fQ.ejXuxApN58LBjNaIJPGyt_AQIBklrtQqFXEKqfGht7w'
-      //await AsyncStorage.getItem('access_token');
-      console.log(token)
-  
-      if (!token) {
-        throw new Error('Bearer token is missing.');
-      }
-  
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      };
-  
-      const response = await apiRequest(`/query/accept/${queryId}`, 'PATCH', {}, headers);
-  
+      const response = await apiRequest(`/query/accept/${queryId}`, 'PATCH', {} , {},true);
       console.log('Query accepted successfully:', response);
-  
-      // Open connection to ws/queries
-      const ws = new WebSocket(`ws://localhost:8000/ws/queries`);
-  
-      ws.onopen = () => {
-        console.log('WebSocket connection to /queries opened.');
-      };
-  
-      ws.onmessage = (event) => {
-        console.log('Received message:', event.data);
-        // Handle WebSocket messages here
-      };
-  
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-  
-      ws.onclose = () => {
-        console.log('WebSocket connection closed.');
-      };
-  
-      // Proceed to the next screen or handle the response further
+      router.push({
+        pathname: '/session/[session_id]',
+        params: { session_id: response.data.session_id }
+    })
+      // Handle successful acceptance
     } catch (error) {
       console.error('Failed to accept query:', error);
     }
@@ -75,70 +32,53 @@ const AdvocateQueryPage = () => {
   };
 
   return (
-    <View className="bg-white h-[100%] items-center pt-[5%]">
-      <View className="h-[15%] w-full justify-center items-center">
-        <Text className="text-Neutral-2 font-cbold" style={{ fontSize: width * 0.06 }}>
-          Query ID
-        </Text>
-        <Text className="text-Neutral-7 font-cbold" style={{ fontSize: width * 0.04 }}>
-          {queryId}
-        </Text>
-      </View>
-      <View className="max-h-[30%] min-h-[20%] overflow-scroll w-[85%] justify-center items-center">
-        <Text className="text-Neutral-7 font-cbold" style={{ fontSize: width * 0.03 }}>
-          Query
-        </Text>
-        <Card className="min-h-[80%] max-h-full w-full bg-Neutral-10 rounded-xl shadow-none justify-center items-center my-[2%] p-4">
-          <View className="flex w-[85%] h-full mx-[5%] items-center justify-between">
-            <View className="flex w-full items-center justify-between mb-[5%]">
-              <Text className="font-c" style={{ fontSize: width * 0.03 }}>
-                {queryDescription}
-              </Text>
-            </View>
-            <View className="flex-row flex-wrap w-full items-center justify-start">
-              {queryTypes.map((type: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined, index: React.Key | null | undefined) => (
-                <Chip
-                  key={index}
-                  className="mr-[2%] my-[2%] bg-primary-foreground"
-                  textStyle={{ color: 'white', fontFamily: 'Caros', fontSize: height * 0.012 }}
-                >
-                  {type}
-                </Chip>
-              ))}
-            </View>
-          </View>
-        </Card>
-      </View>
-      <View className="h-[20%]" />
-      <View className="h-[20%] w-full justify-center items-center">
-        <View className="flex-row h-[85%] w-full justify-evenly items-center">
-          <View className="flex h-[40%] w-[40%] border-4 border-success-background rounded-2xl">
-            <TouchableOpacity className="flex-row h-full w-full justify-evenly items-center border-3 border-success-background p-2" onPress={handleQueryAcceptance}>
-              <View style={{ height: width * 0.1, width: width * 0.1 }} className=" rounded-full justify-center items-center">
-                <Text style={{ fontSize: width * 0.06 }} className="text-success-background">
-                  ✔
-                </Text>
+    <SafeAreaView className="flex-1 bg-white items-center">
+      <StatusBar barStyle="dark-content" />
+      <View className="flex-1 px-6">
+    
+ 
+
+        {/* Query ID */}
+        <View className="items-center mb-6">
+          <Text className="text-2xl font-bold">Query ID</Text>
+          <Text className="text-gray-400">{queryId}</Text>
+        </View>
+
+        {/* Query Card */}
+        <View className="bg-gray-100 rounded-xl p-4 mb-8 flex flex-col items-center">
+          <Text className="text-gray-400 mb-2">Query</Text>
+          <Text className="mb-4">{queryDescription}</Text>
+          <View className="flex-row flex-wrap">
+            {queryTypes.map((type: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined, index: React.Key | null | undefined) => (
+              <View key={index} className="bg-[#00397B] rounded-full px-3 py-1 mr-2 mb-2">
+                <Text className="text-white text-xs">{type}</Text>
               </View>
-              <Text className="font-c text-Neutral-4" style={{ fontSize: width * 0.045 }}>
-                Accept
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View className="flex h-[40%] w-[40%] border-4 border-error-background rounded-2xl">
-            <TouchableOpacity className="flex-row h-full w-full justify-evenly items-center" onPress={handleQueryRejection}>
-              <View style={{ height: width * 0.1, width: width * 0.1 }} className="border-4 border-error-background rounded-full justify-center items-center">
-                <Text style={{ fontSize: width * 0.06 }} className="text-error-background font-c">
-                  !
-                </Text>
-              </View>
-              <Text className="font-c text-Neutral-4" style={{ fontSize: width * 0.045 }}>
-                Reject
-              </Text>
-            </TouchableOpacity>
+            ))}
           </View>
         </View>
+
+        {/* Action Buttons */}
+        <View className="flex-row justify-between w-11/12 items-center">
+          <TouchableOpacity
+            onPress={handleQueryAcceptance}
+            className="flex-row items-center justify-center border-2 border-[#BEEBDC] rounded-sm py-2 px-6"
+          >
+            <Ionicons name="checkmark" size={28} color="#BEEBDC" />
+            <Text className="ml-2 ">Accept</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleQueryRejection}
+            className="flex-row items-center justify-center border-2 border-[#FACFDC] rounded-sm py-2 px-6"
+          >
+            <Ionicons name="close" size={28} color="#FACFDC" />
+            <Text className="ml-2 ">Reject</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+
+
+    </SafeAreaView>
   );
 };
 
