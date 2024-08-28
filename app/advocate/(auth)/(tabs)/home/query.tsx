@@ -11,7 +11,7 @@ const AdvocateQueryPage = () => {
 
   const queryId = notification?.query_id || '10001';
   const queryDescription = notification?.description || 'Once upon a time there was a potato in a magical land';
-  const queryTypes = notification?.query_types || ['Environmental', 'Land'];
+  const queryTypes =  ['Legal Advice', 'Contract Drafting'];
 
   const handleQueryAcceptance = async () => {
     try {

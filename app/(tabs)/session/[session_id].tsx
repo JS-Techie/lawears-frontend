@@ -157,7 +157,7 @@ const Session: React.FC = () => {
 
     const otherUserName = userRole == 'ADVOCATE' ? 'Mehul Chattopadhyay' : 'Parvez Mallick';
     const otherUserInitials = userRole == 'ADVOCATE' ? 'MC' : 'PM';
-    const type = userRole == 'ADVOCATE' ? 'Legal Professional' : 'Client'
+    const type = userRole == 'ADVOCATE' ? 'Client' : 'Legal Professional'
 
     return (
         <SafeAreaView className="flex-1 bg-white">
@@ -174,7 +174,7 @@ const Session: React.FC = () => {
                     <View>
                         <Text className="font-semibold">{otherUserName}</Text>
                         <Text className="text-sm text-[#00397B]">
-                            {sessionData?.advocate_specialization || 'Legal Professional'}
+                            {type}
                         </Text>
                     </View>
                 </View>
