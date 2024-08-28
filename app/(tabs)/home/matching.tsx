@@ -1,21 +1,41 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image } from 'expo-image'
 import { ArrowLeft, Bell } from 'lucide-react-native'
+import { useQueryStore } from '@/stores/query'
 
 const Matching = () => {
-    return (
-        <View className='flex h-full w-full flex-col items-center justify-start bg-white py-2 '>
-            <View className='flex-row w-screen items-center justify-between p-4'>
-                <ArrowLeft className='text-[#00397b]' />
 
-                <Image
-                    source={require('@/assets/images/logo.png')}
-                    style={{ width: 100, height: 50 }}
-                    contentFit='fill'
-                />
-                <Bell className='text-[#00397b]' fill='#00397b' />
-            </View>
+    const query = useQueryStore((state: any) => state.query)
+
+    useEffect(() => {
+
+        const ws = new WebSocket(`ws://localhost:8000/ws/queries`)
+
+        ws.onopen = () => {
+            console.log("CLIENT : READY TO ACCEPT SESSION DETAILS")
+        }
+
+        ws.onmessage = (event) => {
+            console.log("SESSION DATA RECEIVED : ", event.data)
+        }
+
+        ws.onerror = (error) => {
+            console.log("ERROR OCCURED WHILE RECEIVING SESSION DATA : ", error)
+        }
+
+        ws.onclose = () => {
+            console.log('SESSION DETAILS WS CLOSED')
+        }
+
+        return () => {
+            ws.close()
+        }
+    }, [])
+
+
+    return (
+        <View className='flex h-full w-full flex-col items-center justify-start bg-white py-2 space-y-6'>
             <View className='flex items-center justify-center'>
                 <Image
                     source={require('@/assets/images/map.png')}
@@ -24,7 +44,7 @@ const Matching = () => {
                 />
             </View>
 
-            <View className='flex flex-col gap-3 animate-pulse'>
+            <View className='flex flex-col gap-3 animate-pulse items-center justify-center'>
                 <View className="flex-row w-4/5 gap-2 items-center justify-between">
                     <View className="h-2 w-1/3 bg-[#00397b] rounded-lg items-center justify-center">
 
@@ -47,15 +67,23 @@ const Matching = () => {
                 <Text className='text-neutral-500 font-normal'>Your query</Text>
                 <View className='bg-[#e7e7e7] rounded-lg h-fit min-h-[100px] w-full flex flex-col justify-between p-2 px-4'>
                     <Text className='text-sm'>
-                        I have a question regarding contracts.
+                        {query.description}
                     </Text>
-
                     <View className='flex-row gap-2'>
+                        {/* {query.query_types.map((query_type: string) => {
+                        return (
+                            <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
+                                <Text className='text-white'>{query_type}</Text>
+                            </View>
+                        )
+                    })} */}
+
                         <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
-                            <Text className='text-white'>Environmental</Text>
+                            <Text className='text-white'>Contract Drafting</Text>
                         </View>
+
                         <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
-                            <Text className='text-white'>Land</Text>
+                            <Text className='text-white'>Legal Advice</Text>
                         </View>
                     </View>
                 </View>

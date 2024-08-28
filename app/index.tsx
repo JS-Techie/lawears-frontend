@@ -18,12 +18,12 @@ const Homepage = () => {
  
   
 
-    <SafeAreaView className='h-full w-full'>
-{/* className="flex h-screen bg-Neutral-12 items-center" */}
-      <Matching />
-        {/* <Image
+    <SafeAreaView className="flex h-screen bg-Neutral-12 items-center">
+
+      {/* <Matching /> */}
+        <Image
         source={require('@/assets/images/logo.png')}
-        style={{ width: width * 0.3, height: width * 0.3 }}r
+        style={{ width: width * 0.3, height: width * 0.3 }}
         resizeMode="contain"
       />
       <View className="flex-2 justify-center items-center h-1/3">
@@ -61,7 +61,7 @@ const Homepage = () => {
         </TouchableRipple>
       </View>
 
-      <View className="flex-1"></View> */}
+      <View className="flex-1"></View>
     </SafeAreaView>
   );
 };

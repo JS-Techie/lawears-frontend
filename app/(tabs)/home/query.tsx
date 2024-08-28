@@ -90,36 +90,15 @@ const Query = () => {
 
       
       if (token) {
+        softSaveQuery(structuredQuery)
         const response = await apiRequest('/query', 'POST', structuredQuery, {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         });
   
         console.log('Query submitted successfully:', response);
-        
+        router.push('/(tabs)/home/matching')
       
-        // const session_id = response.data.data.session.id; 
-        const ws = new WebSocket(`ws://localhost:8000/ws/queries`);
-  
-        ws.onopen = () => {
-          console.log('WebSocket connection opened.');
-    
-          // ws.send('Hello Server!');
-        };
-  
-        ws.onmessage = (event) => {
-      
-          console.log('Session Accepted:', event.data);
-          setCase(event.data)
-        };
-  
-        ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
-        };
-  
-        ws.onclose = () => {
-          console.log('WebSocket connection closed.');
-        };
   
       } else {
         console.error('Bearer token is missing.');
