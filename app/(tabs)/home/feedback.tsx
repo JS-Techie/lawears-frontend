@@ -20,12 +20,12 @@ const FeedbackSheet: React.FC = () => {
     <SafeAreaView className="flex-1 bg-white">
       <View className="p-6">
         <Text className="text-xl font-semibold mb-6">
-          Are you satisfied with the consult?
+          Are you satisfied with the session?
         </Text>
         
         <View className="flex-row justify-between mb-6">
           <TouchableOpacity 
-            className={`flex-row items-center justify-center w-[48%] py-3 rounded-full ${
+            className={`flex-row items-center justify-center w-[48%] py-3 rounded-lg ${
               satisfaction === 'Yes' ? 'bg-green-100 border border-green-500' : 'bg-gray-100'
             }`}
             onPress={() => setSatisfaction('Yes')}
@@ -39,7 +39,7 @@ const FeedbackSheet: React.FC = () => {
           </TouchableOpacity>
           
           <TouchableOpacity 
-            className={`flex-row items-center justify-center w-[48%] py-3 rounded-full ${
+            className={`flex-row items-center justify-center w-[48%] py-3 rounded-lg ${
               satisfaction === 'No' ? 'bg-red-100 border border-red-500' : 'bg-gray-100'
             }`}
             onPress={() => setSatisfaction('No')}
