@@ -15,7 +15,7 @@ type TabIconProps = {
 const TabLayout: React.FC = () => {
   const { width, height } = useWindowDimensions();
   
-  const tabBarHeight = height * 0.1;
+  const tabBarHeight = height * 0.08;
   const iconSize = Math.min(width * 0.05, tabBarHeight * 0.5);
 
   const getTabOptions = (Icon: React.FC<SvgProps>, title: string) => ({
@@ -65,7 +65,7 @@ const TabLayout: React.FC = () => {
         <Tabs.Screen name='home' options={getTabOptions(HomeTabIcon, 'Home')} />
         <Tabs.Screen name='services' options={getTabOptions(ServiceTabIcon, 'Services')} />
         <Tabs.Screen name='profile' options={getTabOptions(ProfileTabIcon, 'Profile')} />
-        <Tabs.Screen name='chat' options={getTabOptions(ChatTabIcon, 'DO NOT CLICK!')} />
+        <Tabs.Screen name='chat' options={getTabOptions(ChatTabIcon, 'Chat')} />
       </Tabs>
     </View>
   );

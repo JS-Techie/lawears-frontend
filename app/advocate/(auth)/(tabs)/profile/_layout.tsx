@@ -12,7 +12,7 @@ const _layout = () => {
 
   return (
     <>
-      <SafeAreaView className='w-full bg-white h-[13%] justify-end items-center'>
+      {/* <SafeAreaView className='w-full bg-white h-[13%] justify-end items-center'>
         <View className="flex-row items-center justify-end w-[85%] ">
           <View className='w-[10%] h-full'/>
           <View className="w-[80%] h-full items-center justify-end ">
@@ -24,7 +24,7 @@ const _layout = () => {
             </View>
           </View>
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
 
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
