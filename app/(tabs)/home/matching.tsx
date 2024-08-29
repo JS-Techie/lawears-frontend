@@ -43,9 +43,9 @@ const Matching = () => {
 
     useEffect(() => {
         if (sessionId) {
-            router.push({
+            router.replace({
                 pathname: '/session/[session_id]',
-                params: { session_id: sessionId }
+                params: { session_id: sessionId },
                 
             })
         }
@@ -80,11 +80,11 @@ const Matching = () => {
                     </Text>
                     <View className='flex-row gap-2'>
                         <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
-                            <Text className='text-white'>Contract Drafting</Text>
+                            <Text className='text-white'>Tenancy</Text>
                         </View>
-                        <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
+                        {/* <View className='py-2 px-4 rounded-full bg-[#00397b] flex items-center justify-center '>
                             <Text className='text-white'>Legal Advice</Text>
-                        </View>
+                        </View> */}
                     </View>
                 </View>
             </View>

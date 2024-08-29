@@ -37,9 +37,9 @@ const Login = () => {
 
 
         if (response.data.role == 'CUSTOMER'){
-          router.push('/home');
+          router.replace('/home');
         }else{
-          router.push('/advocate/home');
+          router.replace('/advocate/home');
         }
  
        

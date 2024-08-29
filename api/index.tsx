@@ -25,9 +25,9 @@ const apiRequest = async (endpoint : string, method = 'GET', data : any = null, 
   let customer = await AsyncStorage.getItem("customer")
   let advocate = await AsyncStorage.getItem("advocate")
 
-  if (advocate == 'YES'){
-    bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNThiNGY0OTItODE1ZS00YzljLWE4OGQtNjgyZWU3MTQ1NTk2Iiwicm9sZSI6IkFEVk9DQVRFIiwiZXhwIjoxNzI0ODU0MTAwfQ.o6kGJE3ZndKMHdtnR_scEowQRijT0fnPJmCHgqoGagA'
-  }
+  // if (advocate == 'YES'){
+  //   bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNThiNGY0OTItODE1ZS00YzljLWE4OGQtNjgyZWU3MTQ1NTk2Iiwicm9sZSI6IkFEVk9DQVRFIiwiZXhwIjoxNzI0ODU0MTAwfQ.o6kGJE3ZndKMHdtnR_scEowQRijT0fnPJmCHgqoGagA'
+  // }
 
 
   try {

@@ -57,6 +57,7 @@ const _layout = () => {
           <Stack.Screen name='otpverification' options={{headerShown: false}}/>
           <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
           <Stack.Screen name='advocate' options={{headerShown: false}}/>
+          <Stack.Screen name='session/[session_id]' options={{headerShown: false}}/>
       </Stack>
     </PaperProvider>
 

@@ -11,7 +11,7 @@ const AdvocateQueryPage = () => {
 
   const queryId = notification?.query_id || '10001';
   const queryDescription = notification?.description || 'Once upon a time there was a potato in a magical land';
-  const queryTypes =  ['Legal Advice', 'Contract Drafting'];
+  const queryTypes =  ['Tenancy'];
 
   const handleQueryAcceptance = async () => {
     try {
@@ -21,7 +21,7 @@ const AdvocateQueryPage = () => {
         pathname: '/session/[session_id]',
         params: { session_id: response.data.session_id }
     })
-      // Handle successful acceptance
+
     } catch (error) {
       console.error('Failed to accept query:', error);
     }
@@ -33,8 +33,8 @@ const AdvocateQueryPage = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
-      <StatusBar barStyle="dark-content" />
-      <View className="flex-1 px-6">
+
+      <View className="flex-1 mt-20">
     
  
 
@@ -61,7 +61,7 @@ const AdvocateQueryPage = () => {
         <View className="flex-row justify-between w-11/12 items-center">
           <TouchableOpacity
             onPress={handleQueryAcceptance}
-            className="flex-row items-center justify-center border-2 border-[#BEEBDC] rounded-sm py-2 px-6"
+            className="flex-row items-center justify-center border-2 border-[#BEEBDC] rounded-lg py-2 px-6"
           >
             <Ionicons name="checkmark" size={28} color="#BEEBDC" />
             <Text className="ml-2 ">Accept</Text>
@@ -69,7 +69,7 @@ const AdvocateQueryPage = () => {
 
           <TouchableOpacity
             onPress={handleQueryRejection}
-            className="flex-row items-center justify-center border-2 border-[#FACFDC] rounded-sm py-2 px-6"
+            className="flex-row items-center justify-center border-2 border-[#FACFDC] rounded-lg py-2 px-6"
           >
             <Ionicons name="close" size={28} color="#FACFDC" />
             <Text className="ml-2 ">Reject</Text>

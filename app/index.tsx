@@ -1,17 +1,48 @@
 import { Text, View, useWindowDimensions, Image } from 'react-native';
-import React from 'react';
-import { Link } from 'expo-router';
+import React, { useEffect } from 'react';
+import { Link, useRouter } from 'expo-router';
 import { TouchableRipple } from 'react-native-paper';
 import FontScaledSizeRatio from '@/utils/fontScaledSizeRatio';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {TextEncoder} from 'text-encoding';
 import Matching from './(tabs)/home/matching';
-import Session from './(tabs)/session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Session from './(tabs)/session';
 
 // global.TextEncoder = TextEncoder;
 
 const Homepage = () => {
+
+  const router = useRouter()
+
+useEffect(() => {
+
+  const fetchToken = async () => {
+    try{
+      const token = await AsyncStorage.getItem("access_token")
+      const role = await AsyncStorage.getItem("user_role")
+  
+      if (token && token !== undefined){
+  
+        if (role == 'CUSTOMER'){
+          router.push('/home');
+        }else{
+          router.push('/advocate/home');
+        }
+      }else{
+        router.push('/login')
+      }
+    }catch(err){
+      console.log(err)
+    }
+   
+  }
+
+  fetchToken()
+},[])
+  
+
   const { width } = useWindowDimensions();
   const fontScaledSizeRatio = FontScaledSizeRatio();
 

@@ -23,8 +23,8 @@ interface CustomChipAccordianType {
 
 const CustomChipAccordion:  React.FC<CustomChipAccordianType> = ({placeholderMinHeight = 60, dropListHeight = 180, listItemPadY = 15, listItemPadX = 30, windowHeight = 900, windowWidth = 450, animatedTimingDuration = 100, expanded = false, disabled = false, itemsSelected = [], handleItemSelectionChange,
                                                                                                                                 listItemData = [
-                                                                                                                                  { id: '7709fa1a-0f15-4826-8b97-74d0eb06465a', title: 'Contract Drafting' },
-                                                                                                                                  { id: 'c3daa0af-dc0e-45ce-b06e-b519b80234ac', title: 'Legal Advice' },
+                                                                                                                                  { id: '7709fa1a-0f15-4826-8b97-74d0eb06465a', title: 'Tenancy' },
+                                                                                                                           
                                                                                                                                   { id: 'ee15f90f-9f35-47fd-b54f-4a0ac0366fc0', title: 'Document Review' },
                                                                                                                                   { id: '90aff834-bb08-473d-9f1d-8e03be3aeb2e', title: 'Dispute Resolution' }
                                                                                                                                 ]

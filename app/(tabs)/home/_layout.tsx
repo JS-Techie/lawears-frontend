@@ -38,6 +38,7 @@ const HomeLayout: React.FC = () => {
         <Stack.Screen name="reviewquery" options={{ headerShown: false }} />
         <Stack.Screen name="startconsultancy" options={{ headerShown: false }} />
         <Stack.Screen name="matching" options={{ headerShown: false }} />
+        <Stack.Screen name="feedback" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaView>
   );

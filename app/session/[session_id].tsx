@@ -25,20 +25,24 @@ const Session: React.FC = () => {
     const router = useRouter();
     const [newMessage, setNewMessage] = useState('');
     const [sessionData, setSessionData] = useState<SessionData | null>(null);
-    const [userRole, setUserRole] = useState<'CUSTOMER' | 'ADVOCATE' | null>(null);
+    const [userRole, setUserRole] = useState<string| null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const scrollViewRef = useRef<ScrollView>(null);
     const wsRef = useRef<WebSocket | null>(null);
 
+
   
 
     useEffect(() => {
         const fetchUserRole = async () => {
+
+     
+
             const customer = await AsyncStorage.getItem('customer')
             const advocate = await AsyncStorage.getItem('advocate')
 
-            setUserRole(customer == 'YES' ? 'CUSTOMER' : 'ADVOCATE')
+            // setUserRole(customer == 'YES' ? 'CUSTOMER' : 'ADVOCATE')
             try {
                 const role = await AsyncStorage.getItem('user_role');
                 if (role === 'CUSTOMER' || role === 'ADVOCATE') {
@@ -157,7 +161,7 @@ const Session: React.FC = () => {
 
     const otherUserName = userRole == 'ADVOCATE' ? 'Mehul Chattopadhyay' : 'Parvez Mallick';
     const otherUserInitials = userRole == 'ADVOCATE' ? 'MC' : 'PM';
-    const type = userRole == 'ADVOCATE' ? 'Client' : 'Legal Professional'
+    const type = userRole == 'ADVOCATE' ? 'Client' : 'Advocate'
 
     return (
         <SafeAreaView className="flex-1 bg-white">
@@ -182,9 +186,9 @@ const Session: React.FC = () => {
                     <TouchableOpacity>
                         <Ionicons name="information-circle-outline" size={24} color="#00397B" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => router.push('/home')}>
+                    {userRole == 'CUSTOMER' && (<TouchableOpacity onPress={() => router.replace('/home/feedback')}>
                         <Ionicons name="close" size={24} color="#00397B" />
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
                 </View>
             </View>
 
