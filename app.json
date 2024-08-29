@@ -14,13 +14,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "lawears"
+      "bundleIdentifier": "lawears",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.lawears.lawears",
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "web": {
@@ -47,6 +52,10 @@
       "eas": {
         "projectId": "9c8a43c2-452c-4c8f-ba22-e694c5794e82"
       }
+    },
+    "owner": "lawears",
+    "updates": {
+      "url": "https://u.expo.dev/9c8a43c2-452c-4c8f-ba22-e694c5794e82"
     }
   }
 }
