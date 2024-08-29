@@ -26,9 +26,9 @@ useEffect(() => {
       if (token && token !== undefined){
   
         if (role == 'CUSTOMER'){
-          router.push('/home');
+          router.push('/login');
         }else{
-          router.push('/advocate/home');
+          router.push('/login');
         }
       }else{
         router.push('/login')
